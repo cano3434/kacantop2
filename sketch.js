@@ -4,9 +4,10 @@ let bonusBall;
 let menuBalls = [];
 
 let score = 0;
-let highScore = 0;
+let highScore = Number(localStorage.getItem("highScore")) || 0;
 
 let gameState = "menu"; // menu, playing, gameover
+let flashAlpha = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -53,12 +54,15 @@ function draw() {
 
     if (score > highScore) {
       highScore = score;
+      localStorage.setItem("highScore", highScore);
     }
 
     fill(255);
     textSize(24);
     text("Skor: " + floor(score), width / 2, 35);
     text("En Yüksek: " + floor(highScore), width / 2, 65);
+
+    drawFlashEffect();
     return;
   }
 
@@ -198,7 +202,23 @@ function checkBonusCatch() {
 
   if (d < player.size / 2 + bonusBall.size / 2) {
     score += 10;
+    flashAlpha = 180;
     resetBonusBall();
+
+    if (score > highScore) {
+      highScore = score;
+      localStorage.setItem("highScore", highScore);
+    }
+  }
+}
+
+function drawFlashEffect() {
+  if (flashAlpha > 0) {
+    noStroke();
+    fill(255, 255, 180, flashAlpha);
+    rectMode(CORNER);
+    rect(0, 0, width, height);
+    flashAlpha -= 12;
   }
 }
 
@@ -248,6 +268,7 @@ function createGameBalls() {
 
 function startGame() {
   score = 0;
+  flashAlpha = 0;
   gameState = "playing";
 
   player.x = width / 2;
