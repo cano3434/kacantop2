@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kacan Top</title>
+
+<link rel="manifest" href="manifest.json">
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+<script src="sketch.js"></script>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+background:#111;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("sw.js")
+}
+</script>
+
+</body>
+</html>
